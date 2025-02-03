@@ -32,7 +32,7 @@ const handleConect = () => {
   })
 
   // reconecta ou informa o erro caso a conexão seja negada
-  db.on((error)=>{
+  db.on('error', (error)=>{
     console.error("Erro na Data Base: ", error)
     if (error.code === 'PROTOCOL_CONNECTION_LOST' || error.fatal) {
       handleConect();
