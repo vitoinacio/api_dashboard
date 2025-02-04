@@ -1,6 +1,7 @@
 # Dependency directories
 node_modules/
 routes.http
+.env
 
 ### Node ###
 # Logs

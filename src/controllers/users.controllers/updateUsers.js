@@ -1,6 +1,6 @@
 import db from "../../../db.js";
 
-const updateUser = (req, reply) => {
+const updateUser = async (req, reply) => {
   const sql = "UPDATE usuarios SET nome = ?, sexo = ?, dataNasc = ?, email = ?, senha = ?, cpf = ?, tel = ?, cep = ?, cidade = ?, bairro = ?, rua = ?, numeroCasa = ? WHERE id = ?";
 
   const values = [
@@ -16,13 +16,16 @@ const updateUser = (req, reply) => {
     req.body.bairro,
     req.body.rua,
     req.body.numeroCasa,
-  ]
+    req.params.id
+  ];
 
-  db.query(sql, [...values, req.params.id], (error, response)=>{
-    if (error) return reply.status(500).send("Erro ao atualizar usuario: ", error)
-
-    reply.status(200).send("Usuario atualizado!")
-  } )
+  try {
+    const [response] = await db.query(sql, values);
+    reply.status(200).send("Usuario atualizado!");
+  } catch (error) {
+    console.error("Erro ao atualizar usuario: ", error);
+    reply.status(500).send("Erro ao atualizar usuario: " + error);
+  }
 }
 
 export default updateUser;
