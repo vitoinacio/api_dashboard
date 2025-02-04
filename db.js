@@ -21,7 +21,7 @@ const handleConect = async () => {
   }
 };
 
-// inicia a função de conectar à database
-handleConect();
+// inicia a função de conectar à database e aguarda a conexão antes de exportar
+await handleConect();
 
 export default db;
