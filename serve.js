@@ -1,27 +1,22 @@
 import fastify from 'fastify';
+import fastifyCors from 'fastify-cors'; // Importa o plugin fastify-cors
 import userRouter from './src/routes/user.routes/Users.js';
 import financeiroRouter from './src/routes/financeiro.routes/Financeiro.js';
 import debitosRouter from './src/routes/debitos.routes/Debitos.js';
-import fastifyCors from 'fastify-cors';
 
 const app = fastify();
-app.use(cors());
 
+// Registra o plugin fastify-cors
 app.register(fastifyCors, {
-  origin: ['http://localhost:5173'], // Permite apenas requisições do seu frontend
+  origin: ['http://localhost:5173'], // Permite requisições apenas do frontend local
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
   allowedHeaders: ['Content-Type', 'Authorization'], // Cabeçalhos permitidos
 });
 
-// rota de usuario
+// Defina suas rotas
 userRouter(app);
-
-// rota de entrada financeira
 financeiroRouter(app);
-
-// rota para manipulacao de debitos
 debitosRouter(app);
-
 
 const port = process.env.PORT || 3333;
 app.listen({ port }, (err, address) => {
