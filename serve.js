@@ -8,9 +8,16 @@ const app = fastify();
 
 // Registra o plugin fastify-cors
 app.register(fastifyCors, {
-  origin: ['http://localhost:5173/*'], // Permite requisições apenas do frontend local
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
-  allowedHeaders: ['Content-Type', 'Authorization'], // Cabeçalhos permitidos
+  origin: ['http://localhost:5173'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+});
+
+app.addHook('onRequest', (request, reply, done) => {
+  reply.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+  reply.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  reply.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  done();
 });
 
 // Defina suas rotas
