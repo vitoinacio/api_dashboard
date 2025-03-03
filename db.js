@@ -1,35 +1,41 @@
-import pkg from 'pg'; // Importa o pacote inteiro
+import pkg from 'pg';
+const { Pool } = pkg; 
 import dotenv from 'dotenv';
 
-// Cria a variável Pool a partir do pacote pg
-const { Pool } = pkg;
-
-// Configura as variáveis de ambiente
+// Carrega as variáveis de ambiente
 dotenv.config();
 
-// Define a URL da database PostgreSQL a partir da variável de ambiente
+// Obtém a URL de conexão do banco de dados
 const dbUrl = process.env.DATABASE_URL;
 
-// Cria uma variável para usar a conexão com o banco
+// Verifica se a URL de conexão está definida
+if (!dbUrl) {
+  console.error("A variável de ambiente DATABASE_URL não está definida!");
+  process.exit(1); // Termina o processo se não tiver a URL do banco de dados
+}
+
 let pool;
 
-// Função para conectar ao banco de dados e reconectar, caso haja erro ou desconexão
+// Função para conectar ao banco de dados e reconectar em caso de falha
 const handleConnect = async () => {
   try {
     pool = new Pool({
       connectionString: dbUrl,
       ssl: {
-        rejectUnauthorized: false, // Se necessário, desative a verificação SSL para conexões com SSL (ajuste conforme seu ambiente)
+        rejectUnauthorized: false, // Dependendo do ambiente, você pode querer configurar isso
       },
     });
-    console.log("Conectado à Data Base!");
+    // Testa a conexão com o banco de dados
+    await pool.query('SELECT NOW()');
+    console.log("Conectado ao banco de dados!");
   } catch (error) {
-    console.error("Erro ao conectar à Data Base: ", error);
-    setTimeout(handleConnect, 2000); // Reconecta ao banco após 2 segundos
+    console.error("Erro ao conectar ao banco de dados:", error);
+    setTimeout(handleConnect, 5000); // Tenta reconectar após 5 segundos
   }
 };
 
-// Chama a função para conectar à database e aguarda a conexão antes de exportar
-await handleConnect();
+// Chama a função para conectar ao banco
+handleConnect();
 
-export default pool; // Exporta o pool de conexões para ser usado em outras partes do código
+// Exporta o pool para ser utilizado em outros módulos
+export default pool;
