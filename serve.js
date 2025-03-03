@@ -8,7 +8,7 @@ const app = fastify();
 
 // Registra o plugin fastify-cors
 app.register(fastifyCors, {
-  origin: ['http://localhost:5173'], // Permite requisições apenas do frontend local
+  origin: ['http://localhost:5173/*'], // Permite requisições apenas do frontend local
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
   allowedHeaders: ['Content-Type', 'Authorization'], // Cabeçalhos permitidos
 });
