@@ -1,5 +1,8 @@
-import { Pool } from 'pg'; // Importa o Pool do PostgreSQL
+import pkg from 'pg'; // Importa o pacote inteiro
 import dotenv from 'dotenv';
+
+// Cria a variável Pool a partir do pacote pg
+const { Pool } = pkg;
 
 // Configura as variáveis de ambiente
 dotenv.config();
