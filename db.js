@@ -1,27 +1,32 @@
-import mysql from "mysql2/promise";
+import { Pool } from 'pg'; // Importa o Pool do PostgreSQL
 import dotenv from 'dotenv';
 
-// configura as variáveis de ambiente
+// Configura as variáveis de ambiente
 dotenv.config();
 
-// define a URL da database e da localdatabase
+// Define a URL da database PostgreSQL a partir da variável de ambiente
 const dbUrl = process.env.DATABASE_URL;
 
-// cria uma variável para usar a database
-let db;
+// Cria uma variável para usar a conexão com o banco
+let pool;
 
-// função para conectar à database e reconectar, caso de erro ou desconexão
-const handleConect = async () => {
+// Função para conectar ao banco de dados e reconectar, caso haja erro ou desconexão
+const handleConnect = async () => {
   try {
-    db = await mysql.createConnection(dbUrl);
+    pool = new Pool({
+      connectionString: dbUrl,
+      ssl: {
+        rejectUnauthorized: false, // Se necessário, desative a verificação SSL para conexões com SSL (ajuste conforme seu ambiente)
+      },
+    });
     console.log("Conectado à Data Base!");
   } catch (error) {
     console.error("Erro ao conectar à Data Base: ", error);
-    setTimeout(handleConect, 2000); // reconecta à database após 2 segundos
+    setTimeout(handleConnect, 2000); // Reconecta ao banco após 2 segundos
   }
 };
 
-// inicia a função de conectar à database e aguarda a conexão antes de exportar
-await handleConect();
+// Chama a função para conectar à database e aguarda a conexão antes de exportar
+await handleConnect();
 
-export default db;
+export default pool; // Exporta o pool de conexões para ser usado em outras partes do código

@@ -1,10 +1,13 @@
-import db from '../../../db.js';
+import db from '../../../db.js'; // Importando o db.js para usar a conexão com PostgreSQL
 
 const addDebitos = async (req, reply) => {
-  const sql = "INSERT INTO debitos (idUsuario, identificacao, dataVenc, observacao, valor, notificacao) VALUES (?)";
+  const sql = `
+    INSERT INTO debitos (idUsuario, identificacao, dataVenc, observacao, valor, notificacao)
+    VALUES ($1, $2, $3, $4, $5, $6)
+  `;
 
   const values = [
-    req.params.id,
+    req.params.id, // idUsuario
     req.body.identificacao,
     req.body.dataVenc,
     req.body.observacao,
@@ -13,12 +16,14 @@ const addDebitos = async (req, reply) => {
   ];
 
   try {
-    await db.query(sql, values);
-    reply.status(200).send("Debito adicionado!");
+    // Usando a função query para inserir dados no PostgreSQL
+    await db.query(sql, values); // Faz a consulta ao banco com a query e os parâmetros
+
+    reply.status(200).send("Débito adicionado com sucesso!");
   } catch (error) {
-    console.error("Erro ao adicionar debito:", error);
-    reply.status(500).send("Erro ao adicionar debito: " + error);
+    console.error("Erro ao adicionar débito:", error);
+    reply.status(500).send("Erro ao adicionar débito: " + error.message);
   }
-}
+};
 
 export default addDebitos;
