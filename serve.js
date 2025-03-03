@@ -13,12 +13,12 @@ app.register(fastifyCors, {
   allowedHeaders: ['Content-Type', 'Authorization'],
 });
 
-app.addHook('onRequest', (request, reply, done) => {
-  reply.header('Access-Control-Allow-Origin', 'http://localhost:5173');
-  reply.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  reply.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  done();
-});
+// app.addHook('onRequest', (request, reply, done) => {
+//   reply.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+//   reply.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//   reply.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+//   done();
+// });
 
 // Defina suas rotas
 userRouter(app);
