@@ -1,12 +1,19 @@
 import db from "../../../db.js";
 
 const getUsers = async (req, reply) => {
-  const sql = 'SELECT * FROM usuarios';
+  const { email } = req.query; 
+
+  let sql = 'SELECT * FROM usuarios'; 
+  let params = []; 
+
+  if (email) {
+    sql += ' WHERE email = $1'; 
+    params = [email];
+  }
 
   try {
-    // Executando a consulta no PostgreSQL
-    const { rows } = await db.query(sql);  // PostgreSQL usa 'rows' para os resultados
-    reply.status(200).send(rows);  // Enviando a resposta com os dados dos usuários
+    const { rows } = await db.query(sql, params);  
+    reply.status(200).send(rows); 
   } catch (error) {
     console.error('Erro ao executar a query:', error);
     reply.status(500).send("Erro ao obter usuários: " + error.message);
