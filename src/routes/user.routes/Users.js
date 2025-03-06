@@ -8,7 +8,7 @@ import loginUser from "../../controllers/users.controllers/loginUser.js"; // Imp
 
 const userRouter = async (app) => {
   // rotas principais de vizualizaçao, cadastro, update e delete de usuarios
-  app.get('/users', getUsers);
+  app.get('/users/:email', getUsers);
   app.post('/users', addUsers);
   app.put('/users/:id', updateUser);
   app.delete('/users/:id', deleteUser);
