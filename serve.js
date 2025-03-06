@@ -5,13 +5,23 @@ import debitosRouter from './src/routes/debitos.routes/Debitos.js';
 
 const app = fastify();
 
-// Registra o plugin fastify-cors
 app.addHook('onRequest', (request, reply, done) => {
-  const allowedOrigin = 'http://localhost:5173'; // Domínio permitido
-  reply.header('Access-Control-Allow-Origin', allowedOrigin);
+  const allowedOrigins = [
+    'http://localhost:5173',
+    'https://smart-wallet-eta.vercel.app',
+  ];
+
+  const origin = request.headers.origin;
+
+  if (allowedOrigins.includes(origin)) {
+    reply.header('Access-Control-Allow-Origin', origin);
+  } else {
+    reply.header('Access-Control-Allow-Origin', 'https://smart-wallet-eta.vercel.app');
+  }
+
   reply.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   reply.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  
+
   if (request.method === 'OPTIONS') {
     return reply.status(200).send();
   }
@@ -19,7 +29,6 @@ app.addHook('onRequest', (request, reply, done) => {
   done();
 });
 
-// Defina suas rotas
 userRouter(app);
 financeiroRouter(app);
 debitosRouter(app);
