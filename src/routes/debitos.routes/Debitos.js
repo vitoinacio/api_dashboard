@@ -6,8 +6,8 @@ import deleteDebitos from "../../controllers/debitos.controllers/deleteDebitos.j
 const debitosRouter = async (app) => {
  app.get('/debitos', getDebitos);
  app.post('/debitos/:id', addDebitos);
- app.put('/debitos/:id/:idDeb', updateDebito);
- app.delete('/debitos/:id/:idDeb', deleteDebitos);
+ app.put('/debitos/:id/:id_deb', updateDebito);
+ app.delete('/debitos/:id/:id_deb', deleteDebitos);
 }
 
 export default debitosRouter;

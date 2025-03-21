@@ -5,7 +5,7 @@ const updateDebito = async (req, reply) => {
   const sql = `
     UPDATE debito 
     SET identificacao = $1, dataVenc = $2, observacao = $3, valor = $4, notificacao = $5 
-    WHERE idUsuarios = $6 AND id = $7
+    WHERE idUsuarios = $6 AND id_deb = $7
   `;
 
   // Array com os valores a serem passados para a consulta SQL
@@ -16,7 +16,7 @@ const updateDebito = async (req, reply) => {
     req.body.valor,
     req.body.notificacao,
     req.params.id,
-    req.params.idDeb
+    req.params.id_deb
   ];
 
   try {
