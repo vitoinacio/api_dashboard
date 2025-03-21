@@ -1,7 +1,7 @@
 import db from '../../../db.js'; // Importando a conexão com o banco PostgreSQL
 
 const deleteDebitos = async (req, reply) => {
-  const sql = "DELETE FROM debitos WHERE idUsuario = $1 AND id = $2"; // Usando $1 e $2 para parâmetros
+  const sql = "DELETE FROM debito WHERE idUsuario = $1 AND id = $2"; // Usando $1 e $2 para parâmetros
 
   const values = [req.params.id, req.params.idDeb]; // Definindo os valores para a consulta
 

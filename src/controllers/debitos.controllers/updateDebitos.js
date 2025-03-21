@@ -3,7 +3,7 @@ import db from "../../../db.js"; // Importando a conexão com o banco PostgreSQL
 const updateDebito = async (req, reply) => {
   // Consulta SQL para atualizar os dados na tabela debitos
   const sql = `
-    UPDATE debitos 
+    UPDATE debito 
     SET identificacao = $1, dataVenc = $2, observacao = $3, valor = $4, notificacao = $5 
     WHERE idUsuario = $6 AND id = $7
   `;

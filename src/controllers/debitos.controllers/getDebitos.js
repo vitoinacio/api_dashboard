@@ -1,7 +1,7 @@
 import db from '../../../db.js'; // Importando a conexão com o banco PostgreSQL
 
 const getDebitos = async (req, reply) => {
-  const sql = "SELECT * FROM debitos"; // A consulta SQL para buscar todos os débitos
+  const sql = "SELECT * FROM debito"; // A consulta SQL para buscar todos os débitos
 
   try {
     // Executando a consulta no banco de dados PostgreSQL

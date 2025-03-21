@@ -2,7 +2,7 @@ import db from '../../../db.js'; // Importando o db.js para usar a conexão com 
 
 const addDebitos = async (req, reply) => {
   const sql = `
-    INSERT INTO debitos (idUsuario, identificacao, dataVenc, observacao, valor, notificacao)
+    INSERT INTO debito (idUsuario, identificacao, dataVenc, observacao, valor, notificacao)
     VALUES ($1, $2, $3, $4, $5, $6)
   `;
 
