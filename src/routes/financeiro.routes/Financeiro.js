@@ -6,7 +6,7 @@ import updateFinanceiro from "../../controllers/financeiro.controllers/updateFin
 const financeiroRouter = async (app) => {
   // rotas de adicao, update, get e delete de financeiro
   app.get('/financeiro', getFinanceiro);
-  app.post('/financeiro/:id', addFinanceiro);
+  app.post('/financeiro', addFinanceiro);
   app.put('/financeiro/:id', updateFinanceiro);
   app.delete('/financeiro/:id', deleteFinanceiro);
 } 
